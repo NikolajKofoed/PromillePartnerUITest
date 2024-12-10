@@ -18,9 +18,9 @@ namespace PromillePartnerUITest
     {
         static string DriverDirectory = "C:\\WebDrivers\\";
         static string URL = "http://127.0.0.1:5500/index.html"; // mangler rigtig URL
-        static IWebDriver chromeDriver = new ChromeDriver(DriverDirectory);
-        //static FirefoxOptions options = new();
-        //static IWebDriver chromeDriver = new FirefoxDriver(options);
+        //static IWebDriver chromeDriver = new ChromeDriver(DriverDirectory);
+        static FirefoxOptions options = new();
+        static IWebDriver chromeDriver = new FirefoxDriver(options);
 
         [ClassInitialize]
         public static void TestClassSetUp(TestContext context)
@@ -170,7 +170,7 @@ namespace PromillePartnerUITest
             //IEnumerable<IWebElement> Rows = DrukplanTable.FindElements(By.TagName("tr"));
             var wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(10));
             IEnumerable<IWebElement> Rows = wait.Until(DrukplanTable =>  DrukplanTable.FindElements(By.TagName("tr")));
-            Assert.AreEqual(Rows.Count(), 72); //inklusiv header
+            Assert.AreEqual(72, Rows.Count()); //inklusiv header
         }
 
         [TestMethod]
@@ -239,11 +239,11 @@ namespace PromillePartnerUITest
             //IEnumerable<IWebElement> Rows = DrukplanTable.FindElements(By.TagName("tr"));
             var wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(10));
             IEnumerable<IWebElement> Rows = wait.Until(DrukplanTable => DrukplanTable.FindElements(By.TagName("tr")));
-            Assert.AreEqual(Rows.Count(), 72); //inklusiv header
+            Assert.AreEqual(72, Rows.Count()); //inklusiv header
 
 
             IWebElement StartSessionButton = chromeDriver.FindElement(By.Id("startSessionButton"));
-            Assert.AreEqual(StartSessionButton.Text, "Start timer");
+            Assert.AreEqual("Start timer", StartSessionButton.Text);
             action.MoveToElement(StartSessionButton).Click(StartSessionButton).Build().Perform();
 
             IWebElement CurrentSessionTime = chromeDriver.FindElement(By.Id("currentSessionTime"));
