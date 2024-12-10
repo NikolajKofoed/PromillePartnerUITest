@@ -18,9 +18,9 @@ namespace PromillePartnerUITest
     {
         static string DriverDirectory = "C:\\WebDrivers\\";
         static string URL = "http://127.0.0.1:5500/index.html"; // mangler rigtig URL
-        //static IWebDriver chromeDriver = new ChromeDriver(DriverDirectory);
-        static FirefoxOptions options = new();
-        static IWebDriver chromeDriver = new FirefoxDriver(options);
+        static IWebDriver chromeDriver = new ChromeDriver(DriverDirectory);
+        //static FirefoxOptions options = new();
+        //static IWebDriver chromeDriver = new FirefoxDriver(options);
 
         [ClassInitialize]
         public static void TestClassSetUp(TestContext context)
@@ -171,6 +171,83 @@ namespace PromillePartnerUITest
             var wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(10));
             IEnumerable<IWebElement> Rows = wait.Until(DrukplanTable =>  DrukplanTable.FindElements(By.TagName("tr")));
             Assert.AreEqual(Rows.Count(), 72); //inklusiv header
+        }
+
+        [TestMethod]
+        public void GenerateDrukplanAndStartSessionTest()
+        {
+            IWebElement GetPersonalInformationInput = chromeDriver.FindElement(By.Id("getPersonalInformationInput"));
+            IWebElement CurrentPromilleInput = chromeDriver.FindElement(By.Id("currentPromilleInput"));
+            IWebElement TargetPromilleInput = chromeDriver.FindElement(By.Id("targetPromilleInput"));
+            IWebElement HoursInput = chromeDriver.FindElement(By.Id("hoursInput"));
+            IWebElement SelectDrinksInput = chromeDriver.FindElement(By.Id("selectDrinksInput"));
+            IWebElement GenerateDrukplanButton = chromeDriver.FindElement(By.Id("saveSettingsButton"));
+            
+
+            //THIS DOES NOT WORK
+            GetPersonalInformationInput.Clear();
+            CurrentPromilleInput.Clear();
+            TargetPromilleInput.Clear();
+            HoursInput.Clear();
+
+            Thread.Sleep(3000);
+
+            GetPersonalInformationInput.SendKeys("1");
+            CurrentPromilleInput.SendKeys("0");
+            TargetPromilleInput.SendKeys("1");
+            HoursInput.SendKeys("5");
+
+            ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", SelectDrinksInput);
+            Actions action = new(chromeDriver);
+            action.MoveToElement(SelectDrinksInput).Click(SelectDrinksInput).Build().Perform();
+
+            IWebElement DrinksModal = chromeDriver.FindElement(By.Id("drinksModal"));
+
+            IEnumerable<IWebElement> Drinks = DrinksModal.FindElements(By.ClassName("form-check"));
+            Assert.AreEqual(Drinks.Count(), 25);
+
+            for (int i = 1; i < 5; i++)
+            {
+                Thread.Sleep(500);
+                IWebElement Drink = DrinksModal.FindElement(By.Id($"drink-{i}"));
+                Drink.Click();
+            }
+
+            Thread.Sleep(3000);
+            IWebElement CloseDrinksModalButton = DrinksModal.FindElement(By.Id("closeDrinksModalButton"));
+            //CloseDrinksModalButton.Click();
+            Assert.IsTrue(CloseDrinksModalButton.Displayed, "The close button is not visible!");
+            CloseDrinksModalButton.Click();
+
+            //action.MoveToElement(CloseDrinksModalButton).Click(CloseDrinksModalButton).Build().Perform();
+
+            //Thread.Sleep(10000);
+            //SelectDrinksInput.Click();
+
+            Thread.Sleep(3000);
+            ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", GenerateDrukplanButton);
+
+            Assert.IsTrue(GenerateDrukplanButton.Displayed, "The close button is not visible!");
+            action = new(chromeDriver);
+            action.MoveToElement(GenerateDrukplanButton).Click(GenerateDrukplanButton).Build().Perform();
+            // GenerateDrukplanButton.Click();
+
+            Thread.Sleep(1000);
+            IWebElement DrukplanTable = chromeDriver.FindElement(By.Id("drukplanTable"));
+            ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", DrukplanTable);
+            Thread.Sleep(1000);
+            //IEnumerable<IWebElement> Rows = DrukplanTable.FindElements(By.TagName("tr"));
+            var wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(10));
+            IEnumerable<IWebElement> Rows = wait.Until(DrukplanTable => DrukplanTable.FindElements(By.TagName("tr")));
+            Assert.AreEqual(Rows.Count(), 72); //inklusiv header
+
+
+            IWebElement StartSessionButton = chromeDriver.FindElement(By.Id("startSessionButton"));
+            Assert.AreEqual(StartSessionButton.Text, "Start timer");
+            action.MoveToElement(StartSessionButton).Click(StartSessionButton).Build().Perform();
+
+            IWebElement CurrentSessionTime = chromeDriver.FindElement(By.Id("currentSessionTime"));
+            Assert.AreEqual(CurrentSessionTime.Text, "00:00:00");
         }
     }
 }
