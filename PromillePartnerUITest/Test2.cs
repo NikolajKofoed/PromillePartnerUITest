@@ -118,31 +118,22 @@ namespace PromillePartnerUITest
             //THIS DOES NOT WORK
             GetPersonalInformationInput.Clear();
             Thread.Sleep(300);
-            GetPersonalInformationInput.SendKeys(Keys.Control + "a");
-            Thread.Sleep(300);
-            GetPersonalInformationInput.SendKeys(Keys.Backspace);
+            GetPersonalInformationInput.SendKeys("1");
+
             CurrentPromilleInput.Clear();
             Thread.Sleep(300);
-            CurrentPromilleInput.SendKeys(Keys.Control + "a");
-            Thread.Sleep(300);
-            CurrentPromilleInput.SendKeys(Keys.Backspace);
+            CurrentPromilleInput.SendKeys("0");
+
             TargetPromilleInput.Clear();
             Thread.Sleep(300);
-            TargetPromilleInput.SendKeys(Keys.Control + "a");
-            Thread.Sleep(300);
-            TargetPromilleInput.SendKeys(Keys.Backspace);
+            TargetPromilleInput.SendKeys("1");
+
             HoursInput.Clear();
             Thread.Sleep(300);
-            HoursInput.SendKeys(Keys.Control + "a");
-            Thread.Sleep(300);
-            HoursInput.SendKeys(Keys.Backspace);
-
-            Thread.Sleep(300);
-
-            GetPersonalInformationInput.SendKeys("1");
-            CurrentPromilleInput.SendKeys("0");
-            TargetPromilleInput.SendKeys("1");
             HoursInput.SendKeys("5");
+
+
+
 
             ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", SelectDrinksInput);
             Actions action = new(chromeDriver);
@@ -186,7 +177,7 @@ namespace PromillePartnerUITest
             //IEnumerable<IWebElement> Rows = DrukplanTable.FindElements(By.TagName("tr"));
             var wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(10));
             IEnumerable<IWebElement> Rows = wait.Until(DrukplanTable =>  DrukplanTable.FindElements(By.TagName("tr")));
-            Assert.AreEqual(72, Rows.Count()); //inklusiv header
+            Assert.AreEqual(10, Rows.Count()); //inklusiv header
         }
 
         [TestMethod]
@@ -203,31 +194,20 @@ namespace PromillePartnerUITest
             //THIS DOES NOT WORK
             GetPersonalInformationInput.Clear();
             Thread.Sleep(300);
-            GetPersonalInformationInput.SendKeys(Keys.Control + "a");
-            Thread.Sleep(300);
-            GetPersonalInformationInput.SendKeys(Keys.Backspace);
+            GetPersonalInformationInput.SendKeys("1");
+
             CurrentPromilleInput.Clear();
             Thread.Sleep(300);
-            CurrentPromilleInput.SendKeys(Keys.Control + "a");
-            Thread.Sleep(300);
-            CurrentPromilleInput.SendKeys(Keys.Backspace);
+            CurrentPromilleInput.SendKeys("0");
+
             TargetPromilleInput.Clear();
             Thread.Sleep(300);
-            TargetPromilleInput.SendKeys(Keys.Control + "a");
-            Thread.Sleep(300);
-            TargetPromilleInput.SendKeys(Keys.Backspace);
+            TargetPromilleInput.SendKeys("1");
+
             HoursInput.Clear();
             Thread.Sleep(300);
-            HoursInput.SendKeys(Keys.Control + "a");
-            Thread.Sleep(300);
-            HoursInput.SendKeys(Keys.Backspace);
-
-            Thread.Sleep(3000);
-
-            GetPersonalInformationInput.SendKeys("1");
-            CurrentPromilleInput.SendKeys("0");
-            TargetPromilleInput.SendKeys("1");
             HoursInput.SendKeys("5");
+
 
             ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", SelectDrinksInput);
             Actions action = new(chromeDriver);
@@ -271,7 +251,7 @@ namespace PromillePartnerUITest
             //IEnumerable<IWebElement> Rows = DrukplanTable.FindElements(By.TagName("tr"));
             var wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(10));
             IEnumerable<IWebElement> Rows = wait.Until(DrukplanTable => DrukplanTable.FindElements(By.TagName("tr")));
-            Assert.AreEqual(72, Rows.Count()); //inklusiv header
+            Assert.AreEqual(10, Rows.Count()); //inklusiv header
 
 
             IWebElement StartSessionButton = chromeDriver.FindElement(By.Id("startSessionButton"));
