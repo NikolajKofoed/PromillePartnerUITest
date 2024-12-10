@@ -44,7 +44,7 @@ namespace PromillePartnerUITest
 
 
         [ClassInitialize]
-        public static void TestClassSetUp(TestContext context)
+        public void TestClassSetUp(TestContext context)
         {
             chromeDriver.Navigate().GoToUrl(URL);
 
