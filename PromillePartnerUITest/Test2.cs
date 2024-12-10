@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -17,7 +18,9 @@ namespace PromillePartnerUITest
     {
         static string DriverDirectory = "C:\\WebDrivers\\";
         static string URL = "http://127.0.0.1:5500/index.html"; // mangler rigtig URL
-        static IWebDriver chromeDriver = new ChromeDriver(DriverDirectory);
+        //static IWebDriver chromeDriver = new ChromeDriver(DriverDirectory);
+        static FirefoxOptions options = new();
+        static IWebDriver chromeDriver = new FirefoxDriver(options);
 
         [ClassInitialize]
         public static void TestClassSetUp(TestContext context)
@@ -86,6 +89,7 @@ namespace PromillePartnerUITest
             
             IWebElement SelectDrinksInput = chromeDriver.FindElement(By.Id("selectDrinksInput"));
 
+            ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", SelectDrinksInput);
             Actions action = new(chromeDriver);
             action.MoveToElement(SelectDrinksInput).Click(SelectDrinksInput).Build().Perform();
 
@@ -111,6 +115,7 @@ namespace PromillePartnerUITest
             IWebElement SelectDrinksInput = chromeDriver.FindElement(By.Id("selectDrinksInput"));
             IWebElement GenerateDrukplanButton = chromeDriver.FindElement(By.Id("saveSettingsButton"));
 
+            //THIS DOES NOT WORK
             GetPersonalInformationInput.Clear();
             CurrentPromilleInput.Clear();
             TargetPromilleInput.Clear();
@@ -123,6 +128,7 @@ namespace PromillePartnerUITest
             TargetPromilleInput.SendKeys("1");
             HoursInput.SendKeys("5");
 
+            ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", SelectDrinksInput);
             Actions action = new(chromeDriver);
             action.MoveToElement(SelectDrinksInput).Click(SelectDrinksInput).Build().Perform();
 
@@ -150,6 +156,7 @@ namespace PromillePartnerUITest
             //SelectDrinksInput.Click();
 
             Thread.Sleep(3000);
+            ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", GenerateDrukplanButton);
 
             Assert.IsTrue(GenerateDrukplanButton.Displayed, "The close button is not visible!");
             action = new(chromeDriver);
@@ -158,10 +165,12 @@ namespace PromillePartnerUITest
 
             Thread.Sleep(1000);
             IWebElement DrukplanTable = chromeDriver.FindElement(By.Id("drukplanTable"));
-
+            ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", DrukplanTable);
             Thread.Sleep(1000);
-            IEnumerable<IWebElement> Rows = DrukplanTable.FindElements(By.TagName("tr"));
-            Assert.AreEqual(Rows.Count(), 9); //inklusiv header
+            //IEnumerable<IWebElement> Rows = DrukplanTable.FindElements(By.TagName("tr"));
+            var wait = new WebDriverWait(chromeDriver, TimeSpan.FromSeconds(10));
+            IEnumerable<IWebElement> Rows = wait.Until(DrukplanTable =>  DrukplanTable.FindElements(By.TagName("tr")));
+            Assert.AreEqual(Rows.Count(), 72); //inklusiv header
         }
     }
 }
