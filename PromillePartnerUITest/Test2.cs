@@ -117,11 +117,27 @@ namespace PromillePartnerUITest
 
             //THIS DOES NOT WORK
             GetPersonalInformationInput.Clear();
+            Thread.Sleep(300);
+            GetPersonalInformationInput.SendKeys(Keys.Control + "a");
+            Thread.Sleep(300);
+            GetPersonalInformationInput.SendKeys(Keys.Backspace);
             CurrentPromilleInput.Clear();
+            Thread.Sleep(300);
+            CurrentPromilleInput.SendKeys(Keys.Control + "a");
+            Thread.Sleep(300);
+            CurrentPromilleInput.SendKeys(Keys.Backspace);
             TargetPromilleInput.Clear();
+            Thread.Sleep(300);
+            TargetPromilleInput.SendKeys(Keys.Control + "a");
+            Thread.Sleep(300);
+            TargetPromilleInput.SendKeys(Keys.Backspace);
             HoursInput.Clear();
+            Thread.Sleep(300);
+            HoursInput.SendKeys(Keys.Control + "a");
+            Thread.Sleep(300);
+            HoursInput.SendKeys(Keys.Backspace);
 
-            Thread.Sleep(3000);
+            Thread.Sleep(300);
 
             GetPersonalInformationInput.SendKeys("1");
             CurrentPromilleInput.SendKeys("0");
@@ -182,13 +198,29 @@ namespace PromillePartnerUITest
             IWebElement HoursInput = chromeDriver.FindElement(By.Id("hoursInput"));
             IWebElement SelectDrinksInput = chromeDriver.FindElement(By.Id("selectDrinksInput"));
             IWebElement GenerateDrukplanButton = chromeDriver.FindElement(By.Id("saveSettingsButton"));
-            
+
 
             //THIS DOES NOT WORK
             GetPersonalInformationInput.Clear();
+            Thread.Sleep(300);
+            GetPersonalInformationInput.SendKeys(Keys.Control + "a");
+            Thread.Sleep(300);
+            GetPersonalInformationInput.SendKeys(Keys.Backspace);
             CurrentPromilleInput.Clear();
+            Thread.Sleep(300);
+            CurrentPromilleInput.SendKeys(Keys.Control + "a");
+            Thread.Sleep(300);
+            CurrentPromilleInput.SendKeys(Keys.Backspace);
             TargetPromilleInput.Clear();
+            Thread.Sleep(300);
+            TargetPromilleInput.SendKeys(Keys.Control + "a");
+            Thread.Sleep(300);
+            TargetPromilleInput.SendKeys(Keys.Backspace);
             HoursInput.Clear();
+            Thread.Sleep(300);
+            HoursInput.SendKeys(Keys.Control + "a");
+            Thread.Sleep(300);
+            HoursInput.SendKeys(Keys.Backspace);
 
             Thread.Sleep(3000);
 
