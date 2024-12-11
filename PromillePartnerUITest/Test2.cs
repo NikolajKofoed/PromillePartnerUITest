@@ -7,6 +7,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -105,6 +106,22 @@ namespace PromillePartnerUITest
 
         }
 
+        private static void OurClearMethod(IWebElement element)
+        {
+            ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
+            Actions action = new(chromeDriver);
+            action.MoveToElement(element).Click(element).Build().Perform();
+            element.Clear();
+            //string inputText = element.Text;
+            //if (inputText != null)
+            //{
+            //    for (int i = 0; i < inputText.Length; i++)
+            //    {
+            //        element.SendKeys(Keys.Backspace);
+            //    }
+            //}
+        }
+
         [TestMethod]
         public void GenerateDrukplanTest()
         {
@@ -116,19 +133,22 @@ namespace PromillePartnerUITest
             IWebElement GenerateDrukplanButton = chromeDriver.FindElement(By.Id("saveSettingsButton"));
 
             //THIS DOES NOT WORK
-            GetPersonalInformationInput.Clear();
+
+            //GetPersonalInformationInput.Clear();
+            OurClearMethod(GetPersonalInformationInput);
             Thread.Sleep(300);
+           
             GetPersonalInformationInput.SendKeys("1");
 
-            CurrentPromilleInput.Clear();
+            OurClearMethod(CurrentPromilleInput);
             Thread.Sleep(300);
             CurrentPromilleInput.SendKeys("0");
 
-            TargetPromilleInput.Clear();
+            OurClearMethod(TargetPromilleInput);
             Thread.Sleep(300);
             TargetPromilleInput.SendKeys("1");
 
-            HoursInput.Clear();
+            OurClearMethod(HoursInput);
             Thread.Sleep(300);
             HoursInput.SendKeys("5");
 
@@ -192,19 +212,20 @@ namespace PromillePartnerUITest
 
 
             //THIS DOES NOT WORK
-            GetPersonalInformationInput.Clear();
+            OurClearMethod(GetPersonalInformationInput);
             Thread.Sleep(300);
+
             GetPersonalInformationInput.SendKeys("1");
 
-            CurrentPromilleInput.Clear();
+            OurClearMethod(CurrentPromilleInput);
             Thread.Sleep(300);
             CurrentPromilleInput.SendKeys("0");
 
-            TargetPromilleInput.Clear();
+            OurClearMethod(TargetPromilleInput);
             Thread.Sleep(300);
             TargetPromilleInput.SendKeys("1");
 
-            HoursInput.Clear();
+            OurClearMethod(HoursInput);
             Thread.Sleep(300);
             HoursInput.SendKeys("5");
 
@@ -254,7 +275,9 @@ namespace PromillePartnerUITest
             Assert.AreEqual(10, Rows.Count()); //inklusiv header
 
 
+
             IWebElement StartSessionButton = chromeDriver.FindElement(By.Id("startSessionButton"));
+            ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", StartSessionButton);
             Assert.AreEqual("Start timer", StartSessionButton.Text);
             action.MoveToElement(StartSessionButton).Click(StartSessionButton).Build().Perform();
 
