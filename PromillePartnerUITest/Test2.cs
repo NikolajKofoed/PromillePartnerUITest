@@ -138,7 +138,7 @@ namespace PromillePartnerUITest
             OurClearMethod(GetPersonalInformationInput);
             Thread.Sleep(300);
            
-            GetPersonalInformationInput.SendKeys("1");
+            GetPersonalInformationInput.SendKeys("2");
 
             OurClearMethod(CurrentPromilleInput);
             Thread.Sleep(300);
@@ -210,12 +210,11 @@ namespace PromillePartnerUITest
             IWebElement SelectDrinksInput = chromeDriver.FindElement(By.Id("selectDrinksInput"));
             IWebElement GenerateDrukplanButton = chromeDriver.FindElement(By.Id("saveSettingsButton"));
 
-
             //THIS DOES NOT WORK
             OurClearMethod(GetPersonalInformationInput);
             Thread.Sleep(300);
 
-            GetPersonalInformationInput.SendKeys("1");
+            GetPersonalInformationInput.SendKeys("2");
 
             OurClearMethod(CurrentPromilleInput);
             Thread.Sleep(300);
