@@ -15,13 +15,13 @@ using System.Threading.Tasks;
 namespace PromillePartnerUITest
 {
     [TestClass]
-    public sealed class Test2
+    public sealed class Drukplan
     {
         static string DriverDirectory = "C:\\WebDrivers\\";
         static string URL = "http://127.0.0.1:5500/index.html"; // mangler rigtig URL
-        //static IWebDriver chromeDriver = new ChromeDriver(DriverDirectory);
-        static FirefoxOptions options = new();
-        static IWebDriver chromeDriver = new FirefoxDriver(options);
+        static IWebDriver chromeDriver = new ChromeDriver(DriverDirectory);
+        //static FirefoxOptions options = new();
+        //static IWebDriver chromeDriver = new FirefoxDriver(options);
 
         [ClassInitialize]
         public static void TestClassSetUp(TestContext context)
@@ -277,7 +277,7 @@ namespace PromillePartnerUITest
 
             IWebElement StartSessionButton = chromeDriver.FindElement(By.Id("startSessionButton"));
             ((IJavaScriptExecutor)chromeDriver).ExecuteScript("arguments[0].scrollIntoView(true);", StartSessionButton);
-            Assert.AreEqual("Start timer", StartSessionButton.Text);
+            Assert.AreEqual("Start Timer", StartSessionButton.Text);
             action.MoveToElement(StartSessionButton).Click(StartSessionButton).Build().Perform();
 
             IWebElement CurrentSessionTime = chromeDriver.FindElement(By.Id("currentSessionTime"));

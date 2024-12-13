@@ -15,13 +15,13 @@ using System.Threading.Tasks;
 namespace PromillePartnerUITest
 {
     [TestClass]
-    public sealed class Test3
+    public sealed class PromilleFront
     {
         static string DriverDirectory = "C:\\WebDrivers\\";
         static string URL = "http://127.0.0.1:5500/PromilleReading.html"; // mangler rigtig URL
-        //static IWebDriver chromeDriver = new ChromeDriver(DriverDirectory);
-        static FirefoxOptions options = new();
-        static IWebDriver chromeDriver = new FirefoxDriver(options);
+        static IWebDriver chromeDriver = new ChromeDriver(DriverDirectory);
+        //static FirefoxOptions options = new();
+        //static IWebDriver chromeDriver = new FirefoxDriver(options);
 
         [ClassInitialize]
         public static void TestClassSetUp(TestContext context)
@@ -44,9 +44,11 @@ namespace PromillePartnerUITest
         [TestMethod]
         public void CorrectTextTest()
         {
+            Thread.Sleep(1000);
             IWebElement display_latest_promillemeasurement = chromeDriver.FindElement(By.Id("display_latest_promillemeasurement"));
-
+            Thread.Sleep(100);
             Assert.AreNotEqual(display_latest_promillemeasurement.Text, "");
+            Thread.Sleep(100);
             Assert.AreNotEqual(display_latest_promillemeasurement.Text, "Promille:{{ latestPromilleReading.promille}}, time:{{latestPromilleReading.timeStampMiliseconds}}");
         }
     }
